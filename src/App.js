@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 
 import RssReaderModal from "./components/RssReaderModal";
+import CameraModal from "./components/CameraModal";
 
 const App = () => {
   const [fileDirectoryModal, setFileDirectoryModal] = useState(false);
@@ -28,7 +29,7 @@ const App = () => {
             <FaRssSquare size="3em" />
             <p style={{ marginTop: 5 }}>RSS Reader</p>
           </Icon>
-          <Icon>
+          <Icon onClick={() => setCameraModal(true)}>
             <FaCamera size="3em" />
             <p style={{ marginTop: 5 }}>Camera</p>
           </Icon>
@@ -49,6 +50,7 @@ const App = () => {
         isOpen={rssReaderModal}
         onClose={() => setRssReaderModal(false)}
       />
+      <CameraModal isOpen={cameraModal} onClose={() => setCameraModal(false)} />
     </>
   );
 };
