@@ -106,6 +106,7 @@ const ScreenshotButton = styled.button({
   padding: 10,
   backgroundColor: "#347aeb",
   border: "none",
+  borderRadius: 8,
 });
 
 export default CameraModal;
