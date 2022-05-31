@@ -15,6 +15,7 @@ import RssReaderModal from "../Modals/RssReaderModal";
 import CameraModal from "../Modals/CameraModal";
 import GalleryModal from "../Modals/GalleryModal";
 import BrowserModal from "../Modals/BrowserModal";
+import FileDirectoryModal from "../Modals/FileDirectoryModal";
 
 const Home = () => {
   const [fileDirectoryModal, setFileDirectoryModal] = useState(false);
@@ -64,6 +65,10 @@ const Home = () => {
           galleryModal,
           browserModal,
         }}
+      />
+      <FileDirectoryModal
+        isOpen={fileDirectoryModal}
+        onClose={() => setFileDirectoryModal(false)}
       />
       <RssReaderModal
         isOpen={rssReaderModal}
