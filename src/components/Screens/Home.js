@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import {
   FaFile,
@@ -10,7 +11,7 @@ import {
 
 import RssReaderModal from "../Modals/RssReaderModal";
 import CameraModal from "../Modals/CameraModal";
-import { useNavigate } from "react-router-dom";
+import GalleryModal from "../Modals/GalleryModal";
 
 const Home = () => {
   const [fileDirectoryModal, setFileDirectoryModal] = useState(false);
@@ -42,7 +43,7 @@ const Home = () => {
             <FaCamera size="3em" />
             <p style={{ marginTop: 5 }}>Camera</p>
           </Icon>
-          <Icon>
+          <Icon onClick={() => setGalleryModal(true)}>
             <FaPhotoVideo size="3em" />
             <p style={{ marginTop: 5 }}>Gallery</p>
           </Icon>
@@ -60,6 +61,10 @@ const Home = () => {
         onClose={() => setRssReaderModal(false)}
       />
       <CameraModal isOpen={cameraModal} onClose={() => setCameraModal(false)} />
+      <GalleryModal
+        isOpen={galleryModal}
+        onClose={() => setGalleryModal(false)}
+      />
     </>
   );
 };
