@@ -118,12 +118,15 @@ const Sidebar = styled.div({
 const Posts = styled.div({
   maxHeight: "100%",
   flex: "0 1 calc(66% + 20px)",
-  margin: "0 10px",
+  margin: "0 15px",
   overflow: "auto",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
 });
 
 const Post = styled.div({
-  maxWidth: 600,
+  maxWidth: 550,
   boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
   marginBottom: 10,
   marginLeft: 10,

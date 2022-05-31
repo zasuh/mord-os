@@ -9,9 +9,11 @@ import {
   FaChrome,
 } from "react-icons/fa";
 
+import Toolbar from "../Toolbar";
 import RssReaderModal from "../Modals/RssReaderModal";
 import CameraModal from "../Modals/CameraModal";
 import GalleryModal from "../Modals/GalleryModal";
+import BrowserModal from "../Modals/BrowserModal";
 
 const Home = () => {
   const [fileDirectoryModal, setFileDirectoryModal] = useState(false);
@@ -47,15 +49,13 @@ const Home = () => {
             <FaPhotoVideo size="3em" />
             <p style={{ marginTop: 5 }}>Gallery</p>
           </Icon>
-          <Icon>
+          <Icon onClick={() => setBrowserModal(true)}>
             <FaChrome size="3em" />
             <p style={{ marginTop: 5 }}>Chrome</p>
           </Icon>
         </IconsWrapper>
       </Desktop>
-      <Toolbar>
-        <Start>Start</Start>
-      </Toolbar>
+      <Toolbar />
       <RssReaderModal
         isOpen={rssReaderModal}
         onClose={() => setRssReaderModal(false)}
@@ -65,11 +65,16 @@ const Home = () => {
         isOpen={galleryModal}
         onClose={() => setGalleryModal(false)}
       />
+      <BrowserModal
+        isOpen={browserModal}
+        onClose={() => setBrowserModal(false)}
+      />
     </>
   );
 };
 
 const Desktop = styled.div({
+  fontFamily: "Roboto, sans-serif",
   backgroundColor: "#347aeb",
   maxWidth: "100%",
   height: "95vh",
@@ -77,25 +82,6 @@ const Desktop = styled.div({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-start",
-});
-
-const Toolbar = styled.div({
-  backgroundColor: "#b2c2db",
-  maxWidth: "100%",
-  height: "5vh",
-
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-start",
-  paddingLeft: 20,
-});
-
-const Start = styled.div({
-  color: "white",
-  fontSize: 24,
-  textAlign: "center",
-  width: 100,
-  backgroundColor: "#347aeb",
 });
 
 const IconsWrapper = styled.div({

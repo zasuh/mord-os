@@ -84,8 +84,8 @@ const GalleryModal = ({ isOpen, onClose }) => {
         </Sidebar>
         <Images>
           {photos.map((photo) => (
-            <div style={{ width: 150 }}>
-              <ImageWrapper key={photo.id}>
+            <div key={photo.id} style={{ width: 150 }}>
+              <ImageWrapper>
                 <Image src={photo.thumbnailUrl} alt="" />
               </ImageWrapper>
               <ImageTitle>{photo.title}</ImageTitle>
