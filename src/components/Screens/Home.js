@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "@emotion/styled";
 import {
   FaFile,
@@ -10,6 +10,7 @@ import {
 
 import RssReaderModal from "../Modals/RssReaderModal";
 import CameraModal from "../Modals/CameraModal";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [fileDirectoryModal, setFileDirectoryModal] = useState(false);
@@ -17,6 +18,14 @@ const Home = () => {
   const [cameraModal, setCameraModal] = useState(false);
   const [galleryModal, setGalleryModal] = useState(false);
   const [browserModal, setBrowserModal] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const authToken = sessionStorage.getItem("Email");
+    if (authToken) navigate("/");
+    else navigate("/login");
+  }, [navigate]);
+
   return (
     <>
       <Desktop>

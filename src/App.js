@@ -1,6 +1,5 @@
 import React from "react";
-import { Routes, Route, Redirect, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 import Home from "./components/Screens/Home";
@@ -10,10 +9,11 @@ const App = () => {
   const navigate = useNavigate();
 
   const login = (email, password) => {
-    if (email === "borgoth@mordos.com" && password === "12bindthem")
+    if (email === "borgoth@mordos.com" && password === "12bindthem") {
+      sessionStorage.setItem("Email", email);
       navigate("/");
-    else {
-      toast.error("Please enter valid email/password");
+    } else {
+      alert("Please enter valid email/password");
     }
   };
 
@@ -23,7 +23,6 @@ const App = () => {
         <Route path="/login" element={<Login login={login} />} />
         <Route path="/" element={<Home />} />
       </Routes>
-      <ToastContainer />
     </>
   );
 };
