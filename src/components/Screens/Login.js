@@ -8,32 +8,54 @@ const Login = ({ login }) => {
     <Wrapper>
       <InnerWrapper>
         <Title>MORD OS</Title>
-        <LoginCard>
-          <Input
-            autocomplete="false"
-            type="text"
-            placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Input
-            autocomplete="false"
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            onClick={() => login(email, password)}
-            disabled={!email || !password}
-          >
-            Login
-          </Button>
-        </LoginCard>
+        <form onSubmit={login} autoComplete="off">
+          <LoginCard>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              <p style={{ marginBottom: 5 }}>Email</p>
+              <Input
+                autocomplete="false"
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+              }}
+            >
+              <p style={{ marginBottom: 5 }}>Password</p>
+              <Input
+                autocomplete="false"
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <Button
+              type="submit"
+              onClick={() => login(email, password)}
+              disabled={!email || !password}
+            >
+              Login
+            </Button>
+          </LoginCard>
+        </form>
       </InnerWrapper>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div({
+  fontFamily: "Roboto, sans-serif",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",

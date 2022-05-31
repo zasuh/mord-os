@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Modal from "react-modal";
 import styled from "@emotion/styled";
 import { FaChrome } from "react-icons/fa";
@@ -22,6 +22,14 @@ const MODAL_STYLES = {
 };
 
 const BrowserModal = ({ isOpen, onClose }) => {
+  const [searchQuery, setSearchQuery] = useState(null);
+
+  const search = (e) => {
+    if (!searchQuery) return;
+    if (e) e.preventDefault();
+    window.open(`http://google.com/search?q=${searchQuery}`);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -49,7 +57,33 @@ const BrowserModal = ({ isOpen, onClose }) => {
           />
         </div>
       </Header>
-      <Content></Content>
+      <Content>
+        <Title>SCHMOOGLE</Title>
+        <form onSubmit={search}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <Input
+              placeholder="Search like Google"
+              type="text"
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <Button width={100} onClick={search} type="submit">
+                Search
+              </Button>
+              <Button width={150} disabled>
+                I'm feeling lucky
+              </Button>
+            </div>
+          </div>
+        </form>
+      </Content>
     </Modal>
   );
 };
@@ -68,8 +102,34 @@ const Header = styled.div({
 
 const Content = styled.div({
   display: "flex",
+  flexDirection: "column",
   alignItems: "center",
+  justifyContent: "center",
   height: "calc(100% - 64px)", // Height adjusted for top and bottom padding and header height
 });
+
+const Title = styled.div({
+  fontFamily: "Roboto, sans-serif",
+  fontSize: 48,
+  fontWeight: "bold",
+  marginBottom: 16,
+});
+
+const Input = styled.input({
+  width: 500,
+  borderRadius: 12,
+  padding: 5,
+});
+
+const Button = styled.button(({ width }) => ({
+  fontFamily: "Roboto, sans-serif",
+  color: "white",
+  padding: 10,
+  backgroundColor: "#347aeb",
+  border: "none",
+  borderRadius: 8,
+  width,
+  cursor: "pointer",
+}));
 
 export default BrowserModal;
