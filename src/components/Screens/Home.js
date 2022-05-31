@@ -8,6 +8,7 @@ import {
   FaPhotoVideo,
   FaChrome,
 } from "react-icons/fa";
+import background from "../../wallpaper.jpg";
 
 import Toolbar from "../Toolbar";
 import RssReaderModal from "../Modals/RssReaderModal";
@@ -33,7 +34,7 @@ const Home = () => {
     <>
       <Desktop>
         <IconsWrapper>
-          <Icon>
+          <Icon onClick={() => setFileDirectoryModal(true)}>
             <FaFile size="3em" />
             <p style={{ marginTop: 5 }}>File Directory</p>
           </Icon>
@@ -55,7 +56,15 @@ const Home = () => {
           </Icon>
         </IconsWrapper>
       </Desktop>
-      <Toolbar />
+      <Toolbar
+        modals={{
+          fileDirectoryModal,
+          rssReaderModal,
+          cameraModal,
+          galleryModal,
+          browserModal,
+        }}
+      />
       <RssReaderModal
         isOpen={rssReaderModal}
         onClose={() => setRssReaderModal(false)}
@@ -75,7 +84,7 @@ const Home = () => {
 
 const Desktop = styled.div({
   fontFamily: "Roboto, sans-serif",
-  backgroundColor: "#347aeb",
+  backgroundImage: `url(${background})`,
   maxWidth: "100%",
   height: "95vh",
 
@@ -85,6 +94,7 @@ const Desktop = styled.div({
 });
 
 const IconsWrapper = styled.div({
+  color: "white",
   height: "60%",
   display: "flex",
   flexDirection: "column",
