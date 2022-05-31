@@ -8,35 +8,57 @@ const COLUMN_WIDTHS = {
   4: "25%",
 };
 
-const Table = ({ startingData }) => {
+const Table = ({ startingData, onRowClick, onSort }) => {
   return (
     <Wrapper>
-      <ul>
-        <Row tableHeader>
-          <div style={{ flexBasis: "10%" }}>Id</div>
-          <div style={{ flexBasis: "25%" }}>Title</div>
-          <div style={{ flexBasis: "40%" }}>Body</div>
-          <div style={{ flexBasis: "25%" }}>Date</div>
-        </Row>
-        {startingData.map((row) => (
-          <div key={row.id}>
-            <Row tableRow>
-              <Column order={1} data-label="Id">
-                {row.id}
-              </Column>
-              <Column order={2} data-label="Title">
-                {row.title}
-              </Column>
-              <Column order={3} data-label="Body">
-                {row.body}
-              </Column>
-              <Column order={4} data-label="Date">
-                {row.date.toLocaleTimeString()}
-              </Column>
-            </Row>
-          </div>
-        ))}
-      </ul>
+      <Row tableHeader>
+        <div
+          onClick={() => onSort("id")}
+          style={{ flexBasis: "10%", cursor: "pointer" }}
+        >
+          Id
+        </div>
+        <div
+          onClick={() => onSort("title")}
+          style={{ flexBasis: "25%", cursor: "pointer" }}
+        >
+          Title
+        </div>
+        <div
+          onClick={() => onSort("body")}
+          style={{ flexBasis: "40%", cursor: "pointer" }}
+        >
+          Content
+        </div>
+        <div
+          onClick={() => onSort("date")}
+          style={{ flexBasis: "25%", cursor: "pointer" }}
+        >
+          Last Updated
+        </div>
+      </Row>
+      {startingData.map((row) => (
+        <div
+          style={{ cursor: "pointer" }}
+          key={row.id}
+          onClick={() => onRowClick(row)}
+        >
+          <Row tableRow>
+            <Column order={1} data-label="Id">
+              {row.id}
+            </Column>
+            <Column order={2} data-label="Title">
+              {row.title}
+            </Column>
+            <Column order={3} data-label="Body">
+              {row.body}
+            </Column>
+            <Column order={4} data-label="Date">
+              {row.date.toLocaleTimeString()}
+            </Column>
+          </Row>
+        </div>
+      ))}
     </Wrapper>
   );
 };
@@ -45,7 +67,6 @@ const Wrapper = styled.div({
   width: "calc(100% - 50px)",
   maxHeight: "100%",
   margin: "0 15px",
-  padding: "0 10px",
 });
 
 const Row = styled.div(({ tableHeader, tableRow }) => ({

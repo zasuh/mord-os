@@ -58,19 +58,88 @@ const STARTING_DATA = [
 
 const FileDirectoryModal = ({ isOpen, onClose }) => {
   const [files, setFiles] = useState(STARTING_DATA);
-  const [title, setTitle] = useState(null);
-  const [body, setBody] = useState(null);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const [editor, setEditor] = useState(false);
+  const [rowId, setRowId] = useState(null);
+  const [sortingColumn, setSortingColumn] = useState(null);
 
-  const save = () => {
-    const id = Math.floor(1000 + Math.random() * 9000);
-    const newFile = {
-      id,
-      title,
-      body,
-      date: new Date(),
-    };
-    setFiles([newFile, ...files]);
+  const save = (e) => {
+    e.preventDefault();
+
+    if (!rowId) {
+      const id = Math.floor(1000 + Math.random() * 9000);
+      const newFile = { id, title, body, date: new Date() };
+      setFiles([newFile, ...files]);
+      setRowId(null);
+      setTitle("");
+      setBody("");
+    } else {
+      const updatedFiles = files.map((file) =>
+        file.id === rowId ? { ...file, title, body, date: new Date() } : file
+      );
+      setFiles(updatedFiles);
+    }
+  };
+
+  const remove = (e) => {
+    e.preventDefault();
+
+    const updatedFiles = files.filter((file) => file.id !== rowId);
+    setFiles(updatedFiles);
+    setRowId(null);
+    setTitle("");
+    setBody("");
+  };
+
+  const sortData = (column) => {
+    let sortOrder = null;
+    if (sortingColumn === column) sortOrder = "asc";
+    else sortOrder = "desc";
+
+    if (column === "id") {
+      const sorted = files
+        .slice()
+        .sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id));
+      setSortingColumn(column);
+      setFiles(sorted);
+    }
+
+    if (column === "title") {
+      const sorted = files
+        .slice()
+        .sort((a, b) =>
+          sortOrder === "asc"
+            ? a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+            : b.title.toLowerCase().localeCompare(a.title.toLowerCase())
+        );
+      setSortingColumn(column);
+      setFiles(sorted);
+    }
+
+    if (column === "body") {
+      const sorted = files
+        .slice()
+        .sort((a, b) =>
+          sortOrder === "asc"
+            ? a.body.toLowerCase().localeCompare(b.body.toLowerCase())
+            : b.body.toLowerCase().localeCompare(a.body.toLowerCase())
+        );
+      setSortingColumn(column);
+      setFiles(sorted);
+    }
+
+    if (column === "date") {
+      const sorted = files
+        .slice()
+        .sort((a, b) =>
+          sortOrder === "asc"
+            ? new Date(a.date) - new Date(b.date)
+            : new Date(b.date) - new Date(a.date)
+        );
+      setSortingColumn(column);
+      setFiles(sorted);
+    }
   };
 
   return (
@@ -109,51 +178,44 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
       <Content>
         {editor && (
           <Sidebar>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-end",
-                width: "calc(100% - 15px)",
-              }}
-            >
+            <CloseButton>
               <AiOutlineCloseCircle
                 size="1em"
                 onClick={() => setEditor(false)}
                 style={{ cursor: "pointer" }}
               />
-            </div>
+            </CloseButton>
             <form autoComplete="off">
-              <div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <p style={{ marginBottom: 5 }}>Title</p>
-                  <Input
-                    autocomplete="false"
-                    type="text"
-                    placeholder="File title"
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <p style={{ marginBottom: 5 }}>Body</p>
-                  <Textarea
-                    onChange={(e) => setBody(e.target.value)}
-                    placeholder="Write something in me!"
-                    rows="10"
-                  />
-                </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                <p style={{ marginBottom: 5 }}>Title</p>
+                <Input
+                  value={title}
+                  autocomplete="false"
+                  type="text"
+                  placeholder="Enter title"
+                  onChange={(e) => setTitle(e.target.value.trim())}
+                />
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                <p style={{ marginBottom: 5 }}>Content</p>
+                <Textarea
+                  value={body}
+                  onChange={(e) => setBody(e.target.value.trim())}
+                  placeholder="Enter content"
+                  rows="10"
+                />
               </div>
               <div
                 style={{
@@ -161,8 +223,14 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
                   alignItems: "center",
                   justifyContent: "flex-end",
                   width: "calc(100% - 15px)",
+                  gap: 10,
                 }}
               >
+                {rowId && (
+                  <Delete onClick={remove} disabled={!title || !body}>
+                    Delete
+                  </Delete>
+                )}
                 <Save type="submit" onClick={save} disabled={!title || !body}>
                   Save
                 </Save>
@@ -172,12 +240,28 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
         )}
         <Files editor={editor}>
           <AddFileWrapper>
-            <AddFile onClick={() => setEditor(true)}>
+            <AddFile
+              onClick={() => {
+                setRowId(null);
+                setEditor(true);
+                setTitle("");
+                setBody("");
+              }}
+            >
               <FaPlus size="1em" />
-              Add new text file
+              Add
             </AddFile>
           </AddFileWrapper>
-          <Table startingData={files} />
+          <Table
+            startingData={files}
+            onRowClick={(row) => {
+              setRowId(row.id);
+              setEditor(true);
+              setTitle(row.title);
+              setBody(row.body);
+            }}
+            onSort={(id) => sortData(id)}
+          />
         </Files>
       </Content>
     </Modal>
@@ -218,6 +302,13 @@ const Files = styled.div(({ editor }) => ({
   overflow: "auto",
 }));
 
+const CloseButton = styled.div({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  width: "calc(100% - 15px)",
+});
+
 const Input = styled.input({
   width: "calc(100% - 35px)",
   padding: 10,
@@ -248,12 +339,24 @@ const Save = styled.button({
   },
 });
 
+const Delete = styled.button({
+  fontFamily: "Roboto, sans-serif",
+  color: "white",
+  padding: 10,
+  backgroundColor: "#db1424",
+  border: "none",
+  borderRadius: 8,
+  width: 100,
+  cursor: "pointer",
+});
+
 const AddFileWrapper = styled.div({
   display: "flex",
   alignItems: "center",
   justifyContent: "flex-start",
-  width: "100%",
+  width: "calc(100% - 15px)",
   marginBottom: 20,
+  marginLeft: 15,
 });
 
 const AddFile = styled.button({
@@ -267,7 +370,7 @@ const AddFile = styled.button({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  width: 140,
+  gap: 5,
   cursor: "pointer",
 });
 
