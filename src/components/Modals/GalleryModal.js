@@ -7,7 +7,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import { resetState } from "react-modal/lib/helpers/ariaAppHider";
 
 // Make sure to bind modal to your root (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement("#root");
+Modal.setAppElement(document.getElementById("root"));
 
 const MODAL_STYLES = {
   content: {
@@ -107,8 +107,11 @@ const GalleryModal = ({ isOpen, onClose }) => {
             let initialPhotos = [];
             const webcamImages = sessionStorage.getItem("Camera Images");
 
-            if (selected === "allImages" && webcamImages)
-              initialPhotos = [...JSON.parse(webcamImages), ...initialPhotos];
+            if (selected === "allImages")
+              initialPhotos = [
+                ...(webcamImages ? JSON.parse(webcamImages) : []),
+                ...photos,
+              ];
             if (selected === "webcam" && webcamImages)
               initialPhotos = [...JSON.parse(webcamImages)];
             if (selected === "jsonPlaceholder") initialPhotos = photos;
@@ -194,7 +197,7 @@ const Images = styled.div({
   overflow: "auto",
 
   display: "flex",
-  alignItems: "center",
+  alignItems: "flex-start",
   justifyContent: "center",
   gap: 20,
 });

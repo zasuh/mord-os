@@ -5,7 +5,7 @@ import { FaChrome } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 // Make sure to bind modal to your root (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement("#root");
+Modal.setAppElement(document.getElementById("root"));
 
 const MODAL_STYLES = {
   content: {

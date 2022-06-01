@@ -7,7 +7,7 @@ import { AiOutlineCloseCircle } from "react-icons/ai";
 import Table from "../Table";
 
 // Make sure to bind modal to your root (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement("#root");
+Modal.setAppElement(document.getElementById("root"));
 
 const MODAL_STYLES = {
   content: {

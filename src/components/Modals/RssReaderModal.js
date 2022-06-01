@@ -6,7 +6,7 @@ import { FaRssSquare, FaRegCircle } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 // Make sure to bind modal to your root (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement("#root");
+Modal.setAppElement(document.getElementById("root"));
 
 const MODAL_STYLES = {
   content: {
@@ -24,31 +24,31 @@ const MODAL_STYLES = {
 
 const MOCKED_POSTS = [
   {
-    id: 1,
+    id: 112443,
     name: "Mocked post 1",
     email: "email@email.com",
     body: "Lorem ipsum",
   },
   {
-    id: 2,
+    id: 2123143,
     name: "Mocked post 2",
     email: "email2@email.com",
     body: "Lorem ipsum",
   },
   {
-    id: 3,
+    id: 37457657,
     name: "Mocked post 3",
     email: "email3@email.com",
     body: "Lorem ipsum",
   },
   {
-    id: 4,
+    id: 41232145,
     name: "Mocked post 4",
     email: "email4@email.com",
     body: "Lorem ipsum",
   },
   {
-    id: 5,
+    id: 58768768,
     name: "Mocked post 5",
     email: "email5@email.com",
     body: "Lorem ipsum",
