@@ -38,6 +38,8 @@ The bottom toolbar has a start icon and a search icon imitating the Windows OS. 
 
 There are some (but definetly not all) ideas/improvements that would enrich the overall user experience even more if this were to be a real life case. The items marked with an emoji are points where I only have a vague idea how to implement it and would probably require a second or more experienced person to either give me ideas or help me with them.
 
+As stated above this list isn't exhaustive nor is the app perfect. I realize that and hopefully what I've produced shows my level of knowledge.
+
 ### Ideas
 
 - ✋ *Backend implementation*: Implementing a backend would obviously be the first step. Enabling more complete and precise authentication and authorization, saving data to a database and retrieving it without having to utilize session storage.
