@@ -59,3 +59,13 @@ There are some (but definetly not all) ideas/improvements that would enrich the 
 - ✋ *Minimize windows to toolbar/multiple windows as once/resizing windows*: Due to how apps were implemented I doubt I could be able to have multiple modal opened at once and overlaying each other so this would need a more custom solution. Adding a minimize button to the window and the ability to be re-opened through the toolbar is something that could also be done. Resizing would as the first mentioned issue require a more custom solution.
 
 - ✋ *Right click menu*: Add a right click menu for renaming app names, creating a folder on the desktop etc.
+
+- *Maps App*: Embedding a Google Maps type app where we can open maps in a window and use Google Maps features.
+
+### Improvements
+
+These improvements are mostly on how the code was written and where I had issues/what could be done better. There are probably bugs in the code, things written poorly or missing, which is why feedback would be required or code review for something this large.
+
+- ✋ *Test Coverage*: I sadly didn't write tests and this would be something I would need help with if the app had been much larger or even at this scale.
+
+- ✋ *Better ways of writing things*: Specific example would be how I handled sorting in the file directory table/list. I don't think that solution is close to elegant, I would talk to someone more experienced to see if there is a much simpler solution and a much cleaner one. Same goes for CSS, there are certain sections that I think could be written better with some review/talk on how to write them.
