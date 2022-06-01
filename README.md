@@ -62,10 +62,18 @@ There are some (but definetly not all) ideas/improvements that would enrich the 
 
 - *Maps App*: Embedding a Google Maps type app where we can open maps in a window and use Google Maps features.
 
+- *Adding animations/transitions*: Due to time constraints and focusing on implementing the core features I left out animations/transitions for things such as modals opening or collapsing/expanding the sidebar.
+
 ### Improvements
 
 These improvements are mostly on how the code was written and where I had issues/what could be done better. There are probably bugs in the code, things written poorly or missing, which is why feedback would be required or code review for something this large.
 
 - ✋ *Test Coverage*: I sadly didn't write tests and this would be something I would need help with if the app had been much larger or even at this scale.
 
-- ✋ *Better ways of writing things*: Specific example would be how I handled sorting in the file directory table/list. I don't think that solution is close to elegant, I would talk to someone more experienced to see if there is a much simpler solution and a much cleaner one. Same goes for CSS, there are certain sections that I think could be written better with some review/talk on how to write them.
+- ✋ *Better ways of writing code*: Specific example would be how I handled sorting in the file directory table/list. I don't think that solution is close to elegant, I would talk to someone more experienced to see if there is a much simpler solution and a much cleaner one. Same goes for CSS, there are certain sections that I think could be written better with some review/talk on how to write them. This is also true for code which is unnecessary.
+
+- *Not using open source libraries for modals/webcam access*: These two features could have been done in pure JS/CSS, but I opted to use third party libraries as to speed up development and have a more sure/tested way of implementation for what I needed.
+
+- *Private routing*: Since the apps were being opened in modals I didn't really see a need for private routing. If the app icons would be treated as items in a sidebar navigation and each one would take the whole screen then I would be implementing each app as it's own route.
+
+- *Mobile responsiveness*: The app sadly only supports medium sized or large screens. Maybe the mobile view would then move the toolbar to the upper part of the screen and have apps placed in a grid.
