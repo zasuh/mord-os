@@ -34,6 +34,10 @@ Browsing through Google search can be done use the built in Browser app. It's a 
 
 The bottom toolbar has a start icon and a search icon imitating the Windows OS. It also has some icons to the right side along with a clock which shows local time. When an app/modal is opened it will display in the bottom bar as though it would in Windows.
 
-## Improvement ideas
+## Improvements & ideas ✨
 
-TBD
+There are some (but definetly not all) ideas/improvements that would enrich the overall user experience even more if this were to be a real life case. The items marked with an emoji are points where I only have a vague idea how to implement it and would probably require a second or more experienced person to either give me ideas or help me with them.
+
+- *Backend implementation*: Implementing a backend would obviously be the first step. Enabling more complete and precise authentication and authorization, saving data to a database and retrieving it without having to utilize session storage.
+
+- *Unified styling*: I tried to keep the design simple and consistent. There are things I don't like about it, on the UI as well as on the UX, that I would maybe do more design research and figure out what would be the best.
