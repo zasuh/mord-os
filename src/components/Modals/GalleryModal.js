@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import { FaPhotoVideo, FaRegCircle } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+import { resetState } from "react-modal/lib/helpers/ariaAppHider";
 
 // Make sure to bind modal to your root (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
@@ -24,6 +25,7 @@ const MODAL_STYLES = {
 
 const GalleryModal = ({ isOpen, onClose }) => {
   const [photos, setPhotos] = useState([]);
+  const [selected, setSelected] = useState("allImages");
 
   useEffect(() => {
     (async () => {
@@ -36,12 +38,15 @@ const GalleryModal = ({ isOpen, onClose }) => {
         console.log(err);
       }
     })();
-  }, []);
+  }, [isOpen]);
 
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onClose}
+      onRequestClose={() => {
+        onClose();
+        resetState();
+      }}
       contentLabel="Gallery"
       style={MODAL_STYLES}
     >
@@ -60,7 +65,10 @@ const GalleryModal = ({ isOpen, onClose }) => {
         <div>
           <AiOutlineCloseCircle
             size="1em"
-            onClick={onClose}
+            onClick={() => {
+              onClose();
+              resetState();
+            }}
             style={{ cursor: "pointer" }}
           />
         </div>
@@ -68,29 +76,63 @@ const GalleryModal = ({ isOpen, onClose }) => {
       <Content>
         <Sidebar>
           <Sources>
-            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <SidebarItem onClick={() => setSelected("allImages")}>
               <div>
                 <FaRegCircle size="1em" />
               </div>
-              <p style={{ fontSize: 14 }}>All Images</p>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+              <SidebarItemTitle selected={selected === "allImages"}>
+                All Images
+              </SidebarItemTitle>
+            </SidebarItem>
+            <SidebarItem onClick={() => setSelected("jsonPlaceholder")}>
               <div>
                 <FaRegCircle size="1em" />
               </div>
-              <p style={{ fontSize: 14 }}>JSON Placeholder Images</p>
-            </div>
+              <SidebarItemTitle selected={selected === "jsonPlaceholder"}>
+                JSON Placeholder Images
+              </SidebarItemTitle>
+            </SidebarItem>
+            <SidebarItem onClick={() => setSelected("webcam")}>
+              <div>
+                <FaRegCircle size="1em" />
+              </div>
+              <SidebarItemTitle selected={selected === "webcam"}>
+                Webcam Images
+              </SidebarItemTitle>
+            </SidebarItem>
           </Sources>
         </Sidebar>
         <Images>
-          {photos.map((photo) => (
-            <div key={photo.id} style={{ width: 150 }}>
-              <ImageWrapper>
-                <Image src={photo.thumbnailUrl} alt="" />
-              </ImageWrapper>
-              <ImageTitle>{photo.title}</ImageTitle>
-            </div>
-          ))}
+          {(() => {
+            let initialPhotos = [];
+            const webcamImages = sessionStorage.getItem("Camera Images");
+
+            if (selected === "allImages" && webcamImages)
+              initialPhotos = [...JSON.parse(webcamImages), ...initialPhotos];
+            if (selected === "webcam" && webcamImages)
+              initialPhotos = [...JSON.parse(webcamImages)];
+            if (selected === "jsonPlaceholder") initialPhotos = photos;
+
+            return (
+              <>
+                {initialPhotos.map((photo) => (
+                  <div key={photo.id} style={{ width: 150 }}>
+                    <ImageWrapper>
+                      <Image src={photo.thumbnailUrl} alt="" />
+                    </ImageWrapper>
+                    <ImageTitle>{photo.title}</ImageTitle>
+                  </div>
+                ))}
+                <EmptyState>
+                  {initialPhotos.length === 0 && (
+                    <div style={{ fontFamily: "Roboto, sans-serif" }}>
+                      Nothing to show
+                    </div>
+                  )}
+                </EmptyState>
+              </>
+            );
+          })()}
         </Images>
       </Content>
     </Modal>
@@ -111,8 +153,8 @@ const Header = styled.div({
 
 const Content = styled.div({
   display: "flex",
-  alignItems: "center",
-  height: "calc(100% - 64px)", // Height adjusted for top and bottom padding and header height
+  alignItems: "flex-start",
+  height: "calc(100% - 64px)",
 });
 
 const Sidebar = styled.div({
@@ -123,6 +165,19 @@ const Sidebar = styled.div({
   borderRight: "1px solid rgba(0, 0, 0, 0.13)",
   padding: 10,
 });
+
+const SidebarItem = styled.div({
+  display: "flex",
+  alignItems: "center",
+  gap: 5,
+  cursor: "pointer",
+});
+
+const SidebarItemTitle = styled.p(({ selected }) => ({
+  fontFamily: "Roboto, sans-serif",
+  fontSize: 14,
+  fontWeight: selected ? "bold" : "initial",
+}));
 
 const Sources = styled.div({
   display: "flex",
@@ -168,6 +223,14 @@ const Image = styled.img({
   flexGrow: 1,
   width: 150,
   height: 150,
+  objectFit: "contain",
+});
+
+const EmptyState = styled.div({
+  height: 600,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 });
 
 export default GalleryModal;

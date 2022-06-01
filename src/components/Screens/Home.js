@@ -90,6 +90,7 @@ const Home = () => {
 const Desktop = styled.div({
   fontFamily: "Roboto, sans-serif",
   backgroundImage: `url(${background})`,
+  backgroundRepeat: "no-repeat",
   maxWidth: "100%",
   height: "95vh",
 

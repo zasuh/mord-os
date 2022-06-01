@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useCallback } from "react";
 import Modal from "react-modal";
 import Webcam from "react-webcam";
 import styled from "@emotion/styled";
@@ -29,6 +29,31 @@ const VIDEO_CONSTRAINTS = {
 };
 
 const CameraModal = ({ isOpen, onClose }) => {
+  const webcamRef = useRef(null);
+  const capture = useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    const currentImages = sessionStorage.getItem("Camera Images");
+    const id = Math.floor(1000 + Math.random() * 9000);
+
+    if (!currentImages) {
+      sessionStorage.setItem(
+        "Camera Images",
+        JSON.stringify([
+          { id, title: `Camera Screenshot ${id}`, thumbnailUrl: imageSrc },
+        ])
+      );
+    } else {
+      sessionStorage.setItem(
+        "Camera Images",
+        JSON.stringify([
+          ...JSON.parse(currentImages),
+          { id, title: `Camera Screenshot ${id}`, thumbnailUrl: imageSrc },
+        ])
+      );
+    }
+    alert("Picture taken");
+  }, [webcamRef]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -58,23 +83,13 @@ const CameraModal = ({ isOpen, onClose }) => {
       </Header>
       <Content>
         <Webcam
+          ref={webcamRef}
           style={{ width: 900, height: 600 }}
           audio={false}
           screenshotFormat="image/jpeg"
           videoConstraints={VIDEO_CONSTRAINTS}
-        >
-          {({ getScreenshot }) => (
-            <ScreenshotButton
-              onClick={() => {
-                const imageSrc = getScreenshot();
-                alert(`This is the source of the image: ${imageSrc}`);
-                // Do something with image source
-              }}
-            >
-              Capture photo
-            </ScreenshotButton>
-          )}
-        </Webcam>
+        />
+        <ScreenshotButton onClick={capture}>Take Photo</ScreenshotButton>
       </Content>
     </Modal>
   );

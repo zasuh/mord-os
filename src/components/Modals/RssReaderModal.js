@@ -22,8 +22,42 @@ const MODAL_STYLES = {
   },
 };
 
+const MOCKED_POSTS = [
+  {
+    id: 1,
+    name: "Mocked post 1",
+    email: "email@email.com",
+    body: "Lorem ipsum",
+  },
+  {
+    id: 2,
+    name: "Mocked post 2",
+    email: "email2@email.com",
+    body: "Lorem ipsum",
+  },
+  {
+    id: 3,
+    name: "Mocked post 3",
+    email: "email3@email.com",
+    body: "Lorem ipsum",
+  },
+  {
+    id: 4,
+    name: "Mocked post 4",
+    email: "email4@email.com",
+    body: "Lorem ipsum",
+  },
+  {
+    id: 5,
+    name: "Mocked post 5",
+    email: "email5@email.com",
+    body: "Lorem ipsum",
+  },
+];
+
 const RssReaderModal = ({ isOpen, onClose }) => {
   const [posts, setPosts] = useState([]);
+  const [selected, setSelected] = useState("allPosts");
 
   useEffect(() => {
     (async () => {
@@ -67,21 +101,61 @@ const RssReaderModal = ({ isOpen, onClose }) => {
       </Header>
       <Content>
         <Sidebar>
-          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-            <div>
-              <FaRegCircle size="1em" />
-            </div>
-            <p style={{ fontSize: 14 }}>JSON Placeholder Comments</p>
-          </div>
+          <Sources>
+            <SidebarItem onClick={() => setSelected("allPosts")}>
+              <div>
+                <FaRegCircle size="1em" />
+              </div>
+              <SidebarItemTitle selected={selected === "allPosts"}>
+                All Posts
+              </SidebarItemTitle>
+            </SidebarItem>
+            <SidebarItem onClick={() => setSelected("jsonPlaceholder")}>
+              <div>
+                <FaRegCircle size="1em" />
+              </div>
+              <SidebarItemTitle selected={selected === "jsonPlaceholder"}>
+                JSON Placeholder Posts
+              </SidebarItemTitle>
+            </SidebarItem>
+            <SidebarItem onClick={() => setSelected("mocked")}>
+              <div>
+                <FaRegCircle size="1em" />
+              </div>
+              <SidebarItemTitle selected={selected === "mocked"}>
+                Mocked Posts
+              </SidebarItemTitle>
+            </SidebarItem>
+          </Sources>
         </Sidebar>
         <Posts>
-          {posts.map((post) => (
-            <Post key={post.id}>
-              <h3 style={{ fontWeight: "bold" }}>{post.name}</h3>
-              <p>Written by: {post.email}</p>
-              <p>{post.body}</p>
-            </Post>
-          ))}
+          {(() => {
+            let initialPosts = [];
+
+            if (selected === "allPosts")
+              initialPosts = [...MOCKED_POSTS, ...posts];
+            if (selected === "mocked") initialPosts = [...MOCKED_POSTS];
+            if (selected === "jsonPlaceholder") initialPosts = posts;
+
+            return (
+              <>
+                {initialPosts.map((post) => (
+                  <Post key={post.id}>
+                    <h3 style={{ fontWeight: "bold" }}>{post.name}</h3>
+                    <p>Written by: {post.email}</p>
+                    <p>{post.body}</p>
+                  </Post>
+                ))}
+                <EmptyState>
+                  {initialPosts.length === 0 && (
+                    <div style={{ fontFamily: "Roboto, sans-serif" }}>
+                      Nothing to show
+                    </div>
+                  )}
+                </EmptyState>
+              </>
+            );
+          })()}
         </Posts>
       </Content>
     </Modal>
@@ -102,34 +176,54 @@ const Header = styled.div({
 
 const Content = styled.div({
   display: "flex",
-  alignItems: "center",
-  height: "calc(100% - 64px)", // Height adjusted for top and bottom padding and header height
+  alignItems: "flex-start",
+  height: "calc(100% - 64px)",
 });
 
 const Sidebar = styled.div({
   position: "sticky",
   top: 0,
   height: "100%",
-  width: "33%",
-  borderRight: "1px solid rgba(0, 0, 0, 0.13)",
+  width: "25%",
   padding: 10,
+  borderRight: "1px solid rgba(0, 0, 0, 0.13)",
 });
 
+const Sources = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: 10,
+});
+
+const SidebarItem = styled.div({
+  display: "flex",
+  alignItems: "center",
+  gap: 5,
+  cursor: "pointer",
+});
+
+const SidebarItemTitle = styled.p(({ selected }) => ({
+  fontFamily: "Roboto, sans-serif",
+  fontSize: 14,
+  fontWeight: selected ? "bold" : "initial",
+}));
+
 const Posts = styled.div({
-  maxHeight: "100%",
-  flex: "0 1 calc(66% + 20px)",
-  margin: "0 15px",
+  height: "100%",
+  flex: "0 1 calc(75% + 20px)",
+  marginLeft: 15,
   overflow: "auto",
+
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
 });
 
 const Post = styled.div({
-  maxWidth: 550,
+  width: "calc(100% - 40px)",
   boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px",
-  marginBottom: 10,
-  marginLeft: 10,
+  margin: "0 10px 10px 10px",
   borderRadius: 8,
   padding: 10,
 
@@ -137,6 +231,13 @@ const Post = styled.div({
   flexDirection: "column",
   alignItems: "flex-start",
   gap: 10,
+});
+
+const EmptyState = styled.div({
+  height: 600,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 });
 
 export default RssReaderModal;
