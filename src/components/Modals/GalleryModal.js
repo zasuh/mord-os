@@ -51,17 +51,10 @@ const GalleryModal = ({ isOpen, onClose }) => {
       style={MODAL_STYLES}
     >
       <Header>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 10,
-          }}
-        >
+        <Title>
           <FaPhotoVideo size="1em" />
           <h1>Gallery</h1>
-        </div>
+        </Title>
         <div>
           <AiOutlineCloseCircle
             size="1em"
@@ -118,21 +111,22 @@ const GalleryModal = ({ isOpen, onClose }) => {
 
             return (
               <>
-                {initialPhotos.map((photo) => (
-                  <div key={photo.id} style={{ width: 150 }}>
-                    <ImageWrapper>
-                      <Image src={photo.thumbnailUrl} alt="" />
-                    </ImageWrapper>
-                    <ImageTitle>{photo.title}</ImageTitle>
-                  </div>
-                ))}
-                <EmptyState>
-                  {initialPhotos.length === 0 && (
-                    <div style={{ fontFamily: "Roboto, sans-serif" }}>
-                      Nothing to show
+                {initialPhotos.length > 0 ? (
+                  initialPhotos.map((photo) => (
+                    <div key={photo.id} style={{ width: 150 }}>
+                      <ImageWrapper>
+                        <Image src={photo.thumbnailUrl} alt="" />
+                      </ImageWrapper>
+                      <ImageTitle>{photo.title}</ImageTitle>
                     </div>
-                  )}
-                </EmptyState>
+                  ))
+                ) : (
+                  <EmptyState>
+                    <p>
+                      Nothing to show. Take a picture through the Camera App!
+                    </p>
+                  </EmptyState>
+                )}
               </>
             );
           })()}
@@ -148,6 +142,13 @@ const Header = styled.div({
   fontWeight: "bold",
   marginBottom: 20,
 
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: 10,
+});
+
+const Title = styled.div({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",

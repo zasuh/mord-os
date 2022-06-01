@@ -105,7 +105,7 @@ const Content = styled.div({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  height: "calc(100% - 64px)", // Height adjusted for top and bottom padding and header height
+  height: "calc(100% - 64px)",
 });
 
 const Title = styled.div({

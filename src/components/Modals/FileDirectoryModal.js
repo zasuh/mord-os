@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { FaFile, FaPlus } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
-import Table from "../Table";
+import Table from "../Common/Table";
 
 // Make sure to bind modal to your root (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement(document.getElementById("root"));
@@ -27,31 +27,31 @@ const STARTING_DATA = [
   {
     id: 1,
     title: "First title",
-    body: "Some text that will probably be in a body.",
+    body: "A Some text that will probably be in a body.",
     date: new Date(),
   },
   {
     id: 2,
     title: "Second title",
-    body: "Some text that will probably be in a body.",
+    body: "B Some text that will probably be in a body.",
     date: new Date(),
   },
   {
     id: 3,
     title: "Third title",
-    body: "Some text that will probably be in a body.",
+    body: "C Some text that will probably be in a body.",
     date: new Date(),
   },
   {
     id: 4,
     title: "Fourth title",
-    body: "Some text that will probably be in a body.",
+    body: "D Some text that will probably be in a body.",
     date: new Date(),
   },
   {
     id: 5,
     title: "Fifth title",
-    body: "Some text that will probably be in a body.",
+    body: "E Some text that will probably be in a body.",
     date: new Date(),
   },
 ];
@@ -86,6 +86,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
     e.preventDefault();
 
     const updatedFiles = files.filter((file) => file.id !== rowId);
+    setEditor(false);
     setFiles(updatedFiles);
     setRowId(null);
     setTitle("");
@@ -101,7 +102,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
       const sorted = files
         .slice()
         .sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id));
-      setSortingColumn(column);
+      setSortingColumn(sortOrder === "desc" ? column : null);
       setFiles(sorted);
     }
 
@@ -113,7 +114,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
             ? a.title.toLowerCase().localeCompare(b.title.toLowerCase())
             : b.title.toLowerCase().localeCompare(a.title.toLowerCase())
         );
-      setSortingColumn(column);
+      setSortingColumn(sortOrder === "desc" ? column : null);
       setFiles(sorted);
     }
 
@@ -125,7 +126,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
             ? a.body.toLowerCase().localeCompare(b.body.toLowerCase())
             : b.body.toLowerCase().localeCompare(a.body.toLowerCase())
         );
-      setSortingColumn(column);
+      setSortingColumn(sortOrder === "desc" ? column : null);
       setFiles(sorted);
     }
 
@@ -137,7 +138,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
             ? new Date(a.date) - new Date(b.date)
             : new Date(b.date) - new Date(a.date)
         );
-      setSortingColumn(column);
+      setSortingColumn(sortOrder === "desc" ? column : null);
       setFiles(sorted);
     }
   };
@@ -153,17 +154,10 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
       style={MODAL_STYLES}
     >
       <Header>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 10,
-          }}
-        >
+        <Title>
           <FaFile size="1em" />
           <h1>File Directory</h1>
-        </div>
+        </Title>
         <div>
           <AiOutlineCloseCircle
             size="1em"
@@ -199,7 +193,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
                   autocomplete="false"
                   type="text"
                   placeholder="Enter title"
-                  onChange={(e) => setTitle(e.target.value.trim())}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
               <div
@@ -212,7 +206,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
                 <p style={{ marginBottom: 5 }}>Content</p>
                 <Textarea
                   value={body}
-                  onChange={(e) => setBody(e.target.value.trim())}
+                  onChange={(e) => setBody(e.target.value)}
                   placeholder="Enter content"
                   rows="10"
                 />
@@ -238,7 +232,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
             </form>
           </Sidebar>
         )}
-        <Files editor={editor}>
+        <Files editor={editor} hasFiles={files.length > 0}>
           <AddFileWrapper>
             <AddFile
               onClick={() => {
@@ -252,16 +246,22 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
               Add
             </AddFile>
           </AddFileWrapper>
-          <Table
-            startingData={files}
-            onRowClick={(row) => {
-              setRowId(row.id);
-              setEditor(true);
-              setTitle(row.title);
-              setBody(row.body);
-            }}
-            onSort={(id) => sortData(id)}
-          />
+          {files.length > 0 ? (
+            <Table
+              startingData={files}
+              onRowClick={(row) => {
+                setRowId(row.id);
+                setEditor(true);
+                setTitle(row.title);
+                setBody(row.body);
+              }}
+              onSort={(id) => sortData(id)}
+            />
+          ) : (
+            <EmptyState>
+              <p>Nothing to show</p>
+            </EmptyState>
+          )}
         </Files>
       </Content>
     </Modal>
@@ -280,10 +280,17 @@ const Header = styled.div({
   gap: 10,
 });
 
-const Content = styled.div({
+const Title = styled.div({
   display: "flex",
   alignItems: "center",
-  height: "calc(100% - 64px)", // Height adjusted for top and bottom padding and header height
+  justifyContent: "space-between",
+  gap: 10,
+});
+
+const Content = styled.div({
+  display: "flex",
+  alignItems: "flex-start",
+  height: "calc(100% - 64px)",
 });
 
 const Sidebar = styled.div({
@@ -295,11 +302,11 @@ const Sidebar = styled.div({
   padding: 10,
 });
 
-const Files = styled.div(({ editor }) => ({
+const Files = styled.div(({ editor, hasFiles }) => ({
   maxHeight: "100%",
   flex: `0 1 ${editor ? "calc(66% + 20px)" : "100%"}`,
   margin: "0 15px",
-  overflow: "auto",
+  overflow: hasFiles ? "auto" : "hidden",
 }));
 
 const CloseButton = styled.div({
@@ -372,6 +379,13 @@ const AddFile = styled.button({
   justifyContent: "space-between",
   gap: 5,
   cursor: "pointer",
+});
+
+const EmptyState = styled.div({
+  height: 600,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
 });
 
 export default FileDirectoryModal;

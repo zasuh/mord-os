@@ -80,17 +80,10 @@ const RssReaderModal = ({ isOpen, onClose }) => {
       style={MODAL_STYLES}
     >
       <Header>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 10,
-          }}
-        >
+        <Title>
           <FaRssSquare size="1em" />
           <h1>RSS Reader</h1>
-        </div>
+        </Title>
         <div>
           <AiOutlineCloseCircle
             size="1em"
@@ -131,7 +124,6 @@ const RssReaderModal = ({ isOpen, onClose }) => {
         <Posts>
           {(() => {
             let initialPosts = [];
-
             if (selected === "allPosts")
               initialPosts = [...MOCKED_POSTS, ...posts];
             if (selected === "mocked") initialPosts = [...MOCKED_POSTS];
@@ -139,20 +131,19 @@ const RssReaderModal = ({ isOpen, onClose }) => {
 
             return (
               <>
-                {initialPosts.map((post) => (
-                  <Post key={post.id}>
-                    <h3 style={{ fontWeight: "bold" }}>{post.name}</h3>
-                    <p>Written by: {post.email}</p>
-                    <p>{post.body}</p>
-                  </Post>
-                ))}
-                <EmptyState>
-                  {initialPosts.length === 0 && (
-                    <div style={{ fontFamily: "Roboto, sans-serif" }}>
-                      Nothing to show
-                    </div>
-                  )}
-                </EmptyState>
+                {initialPosts.length > 0 ? (
+                  initialPosts.map((post) => (
+                    <Post key={post.id}>
+                      <h3 style={{ fontWeight: "bold" }}>{post.name}</h3>
+                      <p>Written by: {post.email}</p>
+                      <p>{post.body}</p>
+                    </Post>
+                  ))
+                ) : (
+                  <EmptyState>
+                    <p>Nothing to show</p>
+                  </EmptyState>
+                )}
               </>
             );
           })()}
@@ -168,6 +159,13 @@ const Header = styled.div({
   fontWeight: "bold",
   marginBottom: 20,
 
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: 10,
+});
+
+const Title = styled.div({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",

@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import background from "../../wallpaper.jpg";
 
-import Toolbar from "../Toolbar";
+import Toolbar from "../Common/Toolbar";
 import RssReaderModal from "../Modals/RssReaderModal";
 import CameraModal from "../Modals/CameraModal";
 import GalleryModal from "../Modals/GalleryModal";
@@ -37,23 +37,33 @@ const Home = () => {
         <IconsWrapper>
           <Icon onClick={() => setFileDirectoryModal(true)}>
             <FaFile size="3em" />
-            <p style={{ marginTop: 5 }}>File Directory</p>
+            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
+              File Directory
+            </p>
           </Icon>
           <Icon onClick={() => setRssReaderModal(true)}>
             <FaRssSquare size="3em" />
-            <p style={{ marginTop: 5 }}>RSS Reader</p>
+            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
+              RSS Reader
+            </p>
           </Icon>
           <Icon onClick={() => setCameraModal(true)}>
             <FaCamera size="3em" />
-            <p style={{ marginTop: 5 }}>Camera</p>
+            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
+              Camera
+            </p>
           </Icon>
           <Icon onClick={() => setGalleryModal(true)}>
             <FaPhotoVideo size="3em" />
-            <p style={{ marginTop: 5 }}>Gallery</p>
+            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
+              Gallery
+            </p>
           </Icon>
           <Icon onClick={() => setBrowserModal(true)}>
             <FaChrome size="3em" />
-            <p style={{ marginTop: 5 }}>Chrome</p>
+            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
+              Chrome
+            </p>
           </Icon>
         </IconsWrapper>
       </Desktop>

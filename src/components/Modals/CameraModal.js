@@ -62,17 +62,10 @@ const CameraModal = ({ isOpen, onClose }) => {
       style={MODAL_STYLES}
     >
       <Header>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 10,
-          }}
-        >
+        <Title>
           <FaCamera size="1em" />
           <h1>Camera</h1>
-        </div>
+        </Title>
         <div>
           <AiOutlineCloseCircle
             size="1em"
@@ -101,6 +94,13 @@ const Header = styled.div({
   fontWeight: "bold",
   marginBottom: 20,
 
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: 10,
+});
+
+const Title = styled.div({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
