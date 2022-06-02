@@ -4,7 +4,17 @@
 
 Run `npm install` and then either `npm start` or `yarn start` to build the application. The application runs on port 3000.
 
-To login use `borgoth@mordos.com` as the email and `12bindthem`. The credentials save into session storage. The user cannot access the home or `/` page untill he/she authenticates through the `/login` screen.
+To login use `borgoth@mordos.com` as the email and `12bindthem` as the password. The credentials save into local storage. The user cannot access the home or `/` page untill he/she authenticates through the `/login` screen.
+
+## Stack ⚛️
+
+- React
+- React Router
+- React Modal
+- React Webcam
+- Emotion CSS
+- React Icons
+- Axios
 
 ## Features 🕹️
 
@@ -20,7 +30,7 @@ The image gallery app is split into two sections, one being the navigation sideb
 
 ### Camera App 📷
 
-The camera app is simple, but integrates with the gallery app. Once opened the app will load a webcam if it's available. The user can then take a picture. The pictures are stored in session storage and can be seen in the Gallery app under "All Images" or "Webcam Images".
+The camera app is simple, but integrates with the gallery app. Once opened the app will load a webcam if it's available. The user can then take a picture. The pictures are stored in local storage and can be seen in the Gallery app under "All Images" or "Webcam Images".
 
 ### RSS Reader 📰
 
@@ -42,13 +52,13 @@ As stated above this list isn't exhaustive nor is the app perfect. I realize tha
 
 ### Ideas
 
-- ✋ *Backend implementation*: Implementing a backend would obviously be the first step. Enabling more complete and precise authentication and authorization, saving data to a database and retrieving it without having to utilize session storage.
+- ✋ *Backend implementation*: Implementing a backend would obviously be the first step. Enabling more complete and precise authentication and authorization, saving data to a database and retrieving it without having to utilize local storage.
 
 - *Unified styling*: I tried to keep the design simple and consistent. There are things I don't like about it, on the UI as well as on the UX, that I would maybe do more design research and figure out what would be the best.
 
 - *File directory expansion*: I focused primarly on entities that are supposed to be text files, but this can obviously be expanted to include images, the ability to multi select items and delete them more easily, the abilit to download one or more files as `.txt` files, a search input which would allow to better filter out the list etc.
 
-- ✋ *Being able to record video with the webcam*: The package I used to access and use the webcam probably has support for this, but the files would be too large to actually save to session storage. Databases would be good for this.
+- ✋ *Being able to record video with the webcam*: The package I used to access and use the webcam probably has support for this, but the files would be too large to actually save to local storage. Databases would be good for this.
 
 - ✋ *Drag and drop app icons*: Add the ability to drag and drop icons to anywhere on the screen and somehow save the position if the user reloads the page.
 
@@ -70,6 +80,8 @@ As stated above this list isn't exhaustive nor is the app perfect. I realize tha
 
 These improvements are mostly on how the code was written and where I had issues/what could be done better. There are probably bugs in the code, things written poorly or missing, which is why feedback would be required or code review for something this large.
 
+- *Loaders when fetching data*: Since there are not many endpoints where we are actually fetching data currently the use of loaders was omitted. If there were more endpoints to fetch from or larger data sets the loaders would be implemented as stand alone components and used wherever needed.
+
 - ✋ *Test Coverage*: I sadly didn't write tests and this would be something I would need help with if the app had been much larger or even at this scale.
 
 - ✋ *Better ways of writing code*: Specific example would be how I handled sorting in the file directory table/list. I don't think that solution is close to elegant, I would talk to someone more experienced to see if there is a much simpler solution and a much cleaner one. Same goes for CSS, there are certain sections that I think could be written better with some review/talk on how to write them. This is also true for code which is unnecessary.
@@ -78,4 +90,4 @@ These improvements are mostly on how the code was written and where I had issues
 
 - *Private routing*: Since the apps were being opened in modals I didn't really see a need for private routing. If the app icons would be treated as items in a sidebar navigation and each one would take the whole screen then I would be implementing each app as it's own route.
 
-- *Mobile responsiveness*: The app sadly only supports medium sized or large screens. Maybe the mobile view would then move the toolbar to the upper part of the screen and have apps placed in a grid.
+- *Mobile responsiveness*: The app sadly only supports medium sized or large screens. Maybe the mobile view would then move the toolbar to the upper part of the screen and have apps placed in a grid. This would also include some updates to how the current code is written.

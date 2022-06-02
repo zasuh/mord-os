@@ -101,7 +101,7 @@ const GalleryModal = ({ isOpen, onClose }) => {
         <Images>
           {(() => {
             let initialPhotos = [];
-            const webcamImages = sessionStorage.getItem("Camera Images");
+            const webcamImages = localStorage.getItem("Camera Images");
 
             if (selected === "allImages")
               initialPhotos = [

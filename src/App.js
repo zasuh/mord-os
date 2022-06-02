@@ -8,14 +8,14 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const authToken = sessionStorage.getItem("Email");
+    const authToken = localStorage.getItem("Email");
     if (authToken) navigate("/");
     else navigate("/login");
   }, [navigate]);
 
   const login = (email, password) => {
     if (email === "borgoth@mordos.com" && password === "12bindthem") {
-      sessionStorage.setItem("Email", email);
+      localStorage.setItem("Email", email);
       navigate("/");
     } else {
       alert.open("Please enter valid email/password");

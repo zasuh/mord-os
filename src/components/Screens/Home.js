@@ -26,7 +26,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const authToken = sessionStorage.getItem("Email");
+    const authToken = localStorage.getItem("Email");
     if (authToken) navigate("/");
     else navigate("/login");
   }, [navigate]);

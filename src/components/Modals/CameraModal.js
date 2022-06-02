@@ -34,18 +34,18 @@ const CameraModal = ({ isOpen, onClose }) => {
   const webcamRef = useRef(null);
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
-    const currentImages = sessionStorage.getItem("Camera Images");
+    const currentImages = localStorage.getItem("Camera Images");
     const id = Math.floor(1000 + Math.random() * 9000);
 
     if (!currentImages) {
-      sessionStorage.setItem(
+      localStorage.setItem(
         "Camera Images",
         JSON.stringify([
           { id, title: `Camera Screenshot ${id}`, thumbnailUrl: imageSrc },
         ])
       );
     } else {
-      sessionStorage.setItem(
+      localStorage.setItem(
         "Camera Images",
         JSON.stringify([
           ...JSON.parse(currentImages),
