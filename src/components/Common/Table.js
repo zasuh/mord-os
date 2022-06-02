@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 
 const COLUMN_WIDTHS = {
@@ -8,36 +8,88 @@ const COLUMN_WIDTHS = {
   4: "25%",
 };
 
-const Table = ({ startingData, onRowClick, onSort }) => {
+const Table = ({ startingData, onRowClick }) => {
+  const [data, setData] = useState(startingData);
+  const [sortingColumn, setSortingColumn] = useState(null);
+  const sortData = (column) => {
+    let sortOrder = null;
+    if (sortingColumn === column) sortOrder = "asc";
+    else sortOrder = "desc";
+
+    if (column === "id") {
+      const sorted = startingData
+        .slice()
+        .sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id));
+      setSortingColumn(sortOrder === "desc" ? column : null);
+      setData(sorted);
+    }
+
+    if (column === "title") {
+      const sorted = startingData
+        .slice()
+        .sort((a, b) =>
+          sortOrder === "asc"
+            ? a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+            : b.title.toLowerCase().localeCompare(a.title.toLowerCase())
+        );
+      setSortingColumn(sortOrder === "desc" ? column : null);
+      setData(sorted);
+    }
+
+    if (column === "body") {
+      const sorted = startingData
+        .slice()
+        .sort((a, b) =>
+          sortOrder === "asc"
+            ? a.body.toLowerCase().localeCompare(b.body.toLowerCase())
+            : b.body.toLowerCase().localeCompare(a.body.toLowerCase())
+        );
+      setSortingColumn(sortOrder === "desc" ? column : null);
+      setData(sorted);
+    }
+
+    if (column === "date") {
+      const sorted = startingData
+        .slice()
+        .sort((a, b) =>
+          sortOrder === "asc"
+            ? new Date(a.date) - new Date(b.date)
+            : new Date(b.date) - new Date(a.date)
+        );
+      setSortingColumn(sortOrder === "desc" ? column : null);
+      setData(sorted);
+    }
+  };
+
   return (
     <Wrapper>
       <Row tableHeader>
         <div
-          onClick={() => onSort("id")}
+          onClick={() => sortData("id")}
           style={{ flexBasis: "10%", cursor: "pointer" }}
         >
           Id
         </div>
         <div
-          onClick={() => onSort("title")}
+          onClick={() => sortData("title")}
           style={{ flexBasis: "25%", cursor: "pointer" }}
         >
           Title
         </div>
         <div
-          onClick={() => onSort("body")}
+          onClick={() => sortData("body")}
           style={{ flexBasis: "40%", cursor: "pointer" }}
         >
           Content
         </div>
         <div
-          onClick={() => onSort("date")}
+          onClick={() => sortData("date")}
           style={{ flexBasis: "25%", cursor: "pointer" }}
         >
           Last Updated
         </div>
       </Row>
-      {startingData.map((row) => (
+      {data.map((row) => (
         <div
           style={{ cursor: "pointer" }}
           key={row.id}

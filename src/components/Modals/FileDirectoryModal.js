@@ -63,7 +63,6 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
   const [body, setBody] = useState("");
   const [editor, setEditor] = useState(false);
   const [rowId, setRowId] = useState(null);
-  const [sortingColumn, setSortingColumn] = useState(null);
 
   const save = (e) => {
     e.preventDefault();
@@ -92,56 +91,6 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
     setRowId(null);
     setTitle("");
     setBody("");
-  };
-
-  const sortData = (column) => {
-    let sortOrder = null;
-    if (sortingColumn === column) sortOrder = "asc";
-    else sortOrder = "desc";
-
-    if (column === "id") {
-      const sorted = files
-        .slice()
-        .sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id));
-      setSortingColumn(sortOrder === "desc" ? column : null);
-      setFiles(sorted);
-    }
-
-    if (column === "title") {
-      const sorted = files
-        .slice()
-        .sort((a, b) =>
-          sortOrder === "asc"
-            ? a.title.toLowerCase().localeCompare(b.title.toLowerCase())
-            : b.title.toLowerCase().localeCompare(a.title.toLowerCase())
-        );
-      setSortingColumn(sortOrder === "desc" ? column : null);
-      setFiles(sorted);
-    }
-
-    if (column === "body") {
-      const sorted = files
-        .slice()
-        .sort((a, b) =>
-          sortOrder === "asc"
-            ? a.body.toLowerCase().localeCompare(b.body.toLowerCase())
-            : b.body.toLowerCase().localeCompare(a.body.toLowerCase())
-        );
-      setSortingColumn(sortOrder === "desc" ? column : null);
-      setFiles(sorted);
-    }
-
-    if (column === "date") {
-      const sorted = files
-        .slice()
-        .sort((a, b) =>
-          sortOrder === "asc"
-            ? new Date(a.date) - new Date(b.date)
-            : new Date(b.date) - new Date(a.date)
-        );
-      setSortingColumn(sortOrder === "desc" ? column : null);
-      setFiles(sorted);
-    }
   };
 
   return (
@@ -264,7 +213,6 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
                 setTitle(row.title);
                 setBody(row.body);
               }}
-              onSort={(id) => sortData(id)}
             />
           ) : (
             <EmptyState>
