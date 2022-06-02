@@ -6,6 +6,7 @@ import Button from "../Common/Button";
 const Login = ({ login }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   return (
     <Wrapper>
       <InnerWrapper>

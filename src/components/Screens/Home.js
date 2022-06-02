@@ -37,33 +37,23 @@ const Home = () => {
         <IconsWrapper>
           <Icon onClick={() => setFileDirectoryModal(true)}>
             <FaFile size="3em" />
-            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
-              File Directory
-            </p>
+            <IconTitle>File Directory</IconTitle>
           </Icon>
           <Icon onClick={() => setRssReaderModal(true)}>
             <FaRssSquare size="3em" />
-            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
-              RSS Reader
-            </p>
+            <IconTitle>RSS Reader</IconTitle>
           </Icon>
           <Icon onClick={() => setCameraModal(true)}>
             <FaCamera size="3em" />
-            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
-              Camera
-            </p>
+            <IconTitle>Camera</IconTitle>
           </Icon>
           <Icon onClick={() => setGalleryModal(true)}>
             <FaPhotoVideo size="3em" />
-            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
-              Gallery
-            </p>
+            <IconTitle>Gallery</IconTitle>
           </Icon>
           <Icon onClick={() => setBrowserModal(true)}>
             <FaChrome size="3em" />
-            <p style={{ marginTop: 5, textShadow: "black 1px 0 10px" }}>
-              Chrome
-            </p>
+            <IconTitle>Chrome</IconTitle>
           </Icon>
         </IconsWrapper>
       </Desktop>
@@ -117,6 +107,7 @@ const IconsWrapper = styled.div({
   alignItems: "center",
   justifyContent: "space-between",
   padding: 10,
+  gap: "2em",
 });
 
 const Icon = styled.div({
@@ -124,6 +115,11 @@ const Icon = styled.div({
   flexDirection: "column",
   alignItems: "center",
   cursor: "pointer",
+});
+
+const IconTitle = styled.div({
+  marginTop: 5,
+  textShadow: "black 1px 0 10px",
 });
 
 export default Home;

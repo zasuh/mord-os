@@ -66,13 +66,7 @@ const Toolbar = ({ modals }) => {
           </Opened>
         )}
       </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-        }}
-      >
+      <RightSideWrapper>
         <div>
           <FaBell size="1em" />
         </div>
@@ -82,10 +76,10 @@ const Toolbar = ({ modals }) => {
         <div>
           <FaWifi size="1em" />
         </div>
-        <div style={{ fontFamily: "Roboto, sans-serif" }}>
+        <p style={{ fontFamily: "Roboto, sans-serif" }}>
           {date.toLocaleTimeString()}
-        </div>
-      </div>
+        </p>
+      </RightSideWrapper>
     </Wrapper>
   );
 };
@@ -109,6 +103,12 @@ const Opened = styled.div({
   borderRadius: 8,
   padding: 10,
 
+  display: "flex",
+  alignItems: "center",
+  gap: 10,
+});
+
+const RightSideWrapper = styled.div({
   display: "flex",
   alignItems: "center",
   gap: 10,

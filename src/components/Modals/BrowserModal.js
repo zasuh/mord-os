@@ -28,7 +28,7 @@ const BrowserModal = ({ isOpen, onClose }) => {
 
   const search = (e) => {
     if (!searchQuery) return;
-    if (e) e.preventDefault();
+    e.preventDefault();
     window.open(`http://google.com/search?q=${searchQuery}`);
   };
 
@@ -41,17 +41,10 @@ const BrowserModal = ({ isOpen, onClose }) => {
       style={MODAL_STYLES}
     >
       <Header>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 10,
-          }}
-        >
+        <Title>
           <FaChrome size="1em" />
           <h1>Browser</h1>
-        </div>
+        </Title>
         <div>
           <AiOutlineCloseCircle
             size="1em"
@@ -61,16 +54,9 @@ const BrowserModal = ({ isOpen, onClose }) => {
         </div>
       </Header>
       <Content>
-        <Title>SCHMOOGLE</Title>
+        <BrowserTitle>SCHMOOGLE</BrowserTitle>
         <form onSubmit={search}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
+          <FormContent>
             <Input
               placeholder="Search like Google"
               type="text"
@@ -83,7 +69,6 @@ const BrowserModal = ({ isOpen, onClose }) => {
                 onClick={search}
                 type="submit"
               />
-
               <Button
                 text="I'm feeling lucky"
                 width={150}
@@ -91,7 +76,7 @@ const BrowserModal = ({ isOpen, onClose }) => {
                 backgroundColor="#3A2618"
               />
             </div>
-          </div>
+          </FormContent>
         </form>
       </Content>
     </Modal>
@@ -110,6 +95,13 @@ const Header = styled.div({
   gap: 10,
 });
 
+const Title = styled.div({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: 10,
+});
+
 const Content = styled.div({
   display: "flex",
   flexDirection: "column",
@@ -118,7 +110,14 @@ const Content = styled.div({
   height: "calc(100% - 64px)",
 });
 
-const Title = styled.div({
+const FormContent = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: 10,
+});
+
+const BrowserTitle = styled.div({
   fontFamily: "Roboto, sans-serif",
   fontSize: 48,
   fontWeight: "bold",

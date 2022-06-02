@@ -80,7 +80,7 @@ const CameraModal = ({ isOpen, onClose }) => {
       <Content>
         <Webcam
           ref={webcamRef}
-          style={{ width: 900, height: 600 }}
+          style={{ width: "100%", height: "100%", margin: 10 }}
           audio={false}
           screenshotFormat="image/jpeg"
           videoConstraints={VIDEO_CONSTRAINTS}
@@ -115,16 +115,7 @@ const Content = styled.div({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  height: "calc(100% - 64px)", // Height adjusted for top and bottom padding and header height
-});
-
-const ScreenshotButton = styled.button({
-  fontFamily: "Roboto, sans-serif",
-  color: "white",
-  padding: 10,
-  backgroundColor: "#347aeb",
-  border: "none",
-  borderRadius: 8,
+  height: "calc(100% - 64px)",
 });
 
 export default CameraModal;
