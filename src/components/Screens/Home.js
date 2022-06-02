@@ -8,7 +8,7 @@ import {
   FaPhotoVideo,
   FaChrome,
 } from "react-icons/fa";
-import background from "../../wallpaper.jpg";
+import background from "../../wallpaper.png";
 
 import Toolbar from "../Common/Toolbar";
 import RssReaderModal from "../Modals/RssReaderModal";

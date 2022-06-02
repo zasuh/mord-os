@@ -4,6 +4,8 @@ import styled from "@emotion/styled";
 import { FaChrome } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
+import Button from "../Common/Button";
+
 // Make sure to bind modal to your root (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement(document.getElementById("root"));
 
@@ -32,6 +34,7 @@ const BrowserModal = ({ isOpen, onClose }) => {
 
   return (
     <Modal
+      ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={onClose}
       contentLabel="Gallery"
@@ -74,12 +77,19 @@ const BrowserModal = ({ isOpen, onClose }) => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <Button width={100} onClick={search} type="submit">
-                Search
-              </Button>
-              <Button width={150} disabled>
-                I'm feeling lucky
-              </Button>
+              <Button
+                text="Search"
+                width={100}
+                onClick={search}
+                type="submit"
+              />
+
+              <Button
+                text="I'm feeling lucky"
+                width={150}
+                disabled
+                backgroundColor="#3A2618"
+              />
             </div>
           </div>
         </form>
@@ -120,16 +130,5 @@ const Input = styled.input({
   borderRadius: 12,
   padding: 5,
 });
-
-const Button = styled.button(({ width }) => ({
-  fontFamily: "Roboto, sans-serif",
-  color: "white",
-  padding: 10,
-  backgroundColor: "#347aeb",
-  border: "none",
-  borderRadius: 8,
-  width,
-  cursor: "pointer",
-}));
 
 export default BrowserModal;

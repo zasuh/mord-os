@@ -28,20 +28,23 @@ const GalleryModal = ({ isOpen, onClose }) => {
   const [selected, setSelected] = useState("allImages");
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(
-          "https://jsonplaceholder.typicode.com/photos"
-        );
-        setPhotos(data.slice(0, 50));
-      } catch (err) {
-        console.log(err);
-      }
-    })();
+    if (isOpen) {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            "https://jsonplaceholder.typicode.com/photos"
+          );
+          setPhotos(data.slice(0, 50));
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+    }
   }, [isOpen]);
 
   return (
     <Modal
+      ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={() => {
         onClose();

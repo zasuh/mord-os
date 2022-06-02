@@ -5,6 +5,8 @@ import styled from "@emotion/styled";
 import { FaCamera } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
+import Button from "../Common/Button";
+
 // Make sure to bind modal to your root (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement(document.getElementById("root"));
 
@@ -56,6 +58,7 @@ const CameraModal = ({ isOpen, onClose }) => {
 
   return (
     <Modal
+      ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={onClose}
       contentLabel="Camera"
@@ -82,7 +85,7 @@ const CameraModal = ({ isOpen, onClose }) => {
           screenshotFormat="image/jpeg"
           videoConstraints={VIDEO_CONSTRAINTS}
         />
-        <ScreenshotButton onClick={capture}>Take Photo</ScreenshotButton>
+        <Button text="Take Photo" onClick={capture} />
       </Content>
     </Modal>
   );

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 
+import Button from "../Common/Button";
+
 const Login = ({ login }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,12 +43,11 @@ const Login = ({ login }) => {
               />
             </div>
             <Button
+              text="Login"
               type="submit"
               onClick={() => login(email, password)}
               disabled={!email || !password}
-            >
-              Login
-            </Button>
+            />
           </LoginCard>
         </form>
       </InnerWrapper>
@@ -93,21 +94,6 @@ const LoginCard = styled.div({
 const Input = styled.input({
   width: 200,
   padding: 10,
-});
-
-const Button = styled.button({
-  fontFamily: "Roboto, sans-serif",
-  color: "white",
-  padding: 10,
-  backgroundColor: "#347aeb",
-  border: "none",
-  borderRadius: 8,
-  width: 100,
-  cursor: "pointer",
-  ":disabled": {
-    backgroundColor: "grey",
-    cursor: "not-allowed",
-  },
 });
 
 export default Login;

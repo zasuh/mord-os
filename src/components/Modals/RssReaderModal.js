@@ -60,20 +60,23 @@ const RssReaderModal = ({ isOpen, onClose }) => {
   const [selected, setSelected] = useState("allPosts");
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { data } = await axios.get(
-          "https://jsonplaceholder.typicode.com/comments"
-        );
-        setPosts(data.slice(0, 50));
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
+    if (isOpen) {
+      (async () => {
+        try {
+          const { data } = await axios.get(
+            "https://jsonplaceholder.typicode.com/comments"
+          );
+          setPosts(data.slice(0, 50));
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+    }
+  }, [isOpen]);
 
   return (
     <Modal
+      ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={onClose}
       contentLabel="RSS Reader"
@@ -135,7 +138,9 @@ const RssReaderModal = ({ isOpen, onClose }) => {
                   initialPosts.map((post) => (
                     <Post key={post.id}>
                       <h3 style={{ fontWeight: "bold" }}>{post.name}</h3>
-                      <p>Written by: {post.email}</p>
+                      <p style={{ color: "#9A8873" }}>
+                        Written by: {post.email}
+                      </p>
                       <p>{post.body}</p>
                     </Post>
                   ))

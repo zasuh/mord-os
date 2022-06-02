@@ -50,7 +50,7 @@ table {
 /* Scrollbar styles */
 * {
   scrollbar-width: auto;
-  scrollbar-color: #5182cf #ffffff;
+  scrollbar-color: #9A8873 #ffffff;
 }
 
 *::-webkit-scrollbar {
@@ -62,7 +62,7 @@ table {
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #5182cf;
+  background-color: #9A8873;
   border-radius: 10px;
   border: 3px solid #ffffff;
 }

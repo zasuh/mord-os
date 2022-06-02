@@ -66,7 +66,13 @@ const Toolbar = ({ modals }) => {
           </Opened>
         )}
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+        }}
+      >
         <div>
           <FaBell size="1em" />
         </div>
@@ -86,7 +92,8 @@ const Toolbar = ({ modals }) => {
 
 const Wrapper = styled.div({
   fontFamily: "Roboto, sans-serif",
-  backgroundColor: "#b2c2db",
+  backgroundColor: "#171614",
+  color: "white",
   maxWidth: "100%",
   height: "5vh",
 
@@ -98,7 +105,7 @@ const Wrapper = styled.div({
 
 const Opened = styled.div({
   width: 150,
-  border: "1px solid black",
+  border: "1px solid white",
   borderRadius: 8,
   padding: 10,
 

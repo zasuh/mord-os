@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { FaFile, FaPlus } from "react-icons/fa";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
+import Button from "../Common/Button";
 import Table from "../Common/Table";
 
 // Make sure to bind modal to your root (https://reactcommunity.org/react-modal/accessibility/)
@@ -145,6 +146,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
 
   return (
     <Modal
+      ariaHideApp={false}
       isOpen={isOpen}
       onRequestClose={() => {
         setEditor(false);
@@ -221,20 +223,28 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
                 }}
               >
                 {rowId && (
-                  <Delete onClick={remove} disabled={!title || !body}>
-                    Delete
-                  </Delete>
+                  <Button
+                    text="Delete"
+                    onClick={remove}
+                    disabled={!title || !body}
+                    backgroundColor="#754043"
+                  />
                 )}
-                <Save type="submit" onClick={save} disabled={!title || !body}>
-                  Save
-                </Save>
+                <Button
+                  text="Save"
+                  type="submit"
+                  onClick={save}
+                  disabled={!title || !body}
+                />
               </div>
             </form>
           </Sidebar>
         )}
         <Files editor={editor} hasFiles={files.length > 0}>
           <AddFileWrapper>
-            <AddFile
+            <Button
+              width={60}
+              text="Add"
               onClick={() => {
                 setRowId(null);
                 setEditor(true);
@@ -243,8 +253,7 @@ const FileDirectoryModal = ({ isOpen, onClose }) => {
               }}
             >
               <FaPlus size="1em" />
-              Add
-            </AddFile>
+            </Button>
           </AddFileWrapper>
           {files.length > 0 ? (
             <Table
@@ -331,32 +340,6 @@ const Textarea = styled.textarea({
   marginBottom: 20,
 });
 
-const Save = styled.button({
-  fontFamily: "Roboto, sans-serif",
-  color: "white",
-  padding: 10,
-  backgroundColor: "#347aeb",
-  border: "none",
-  borderRadius: 8,
-  width: 100,
-  cursor: "pointer",
-  ":disabled": {
-    backgroundColor: "grey",
-    cursor: "not-allowed",
-  },
-});
-
-const Delete = styled.button({
-  fontFamily: "Roboto, sans-serif",
-  color: "white",
-  padding: 10,
-  backgroundColor: "#db1424",
-  border: "none",
-  borderRadius: 8,
-  width: 100,
-  cursor: "pointer",
-});
-
 const AddFileWrapper = styled.div({
   display: "flex",
   alignItems: "center",
@@ -364,21 +347,6 @@ const AddFileWrapper = styled.div({
   width: "calc(100% - 15px)",
   marginBottom: 20,
   marginLeft: 15,
-});
-
-const AddFile = styled.button({
-  fontFamily: "Roboto, sans-serif",
-  color: "white",
-  padding: 10,
-  backgroundColor: "#347aeb",
-  border: "none",
-  borderRadius: 8,
-
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: 5,
-  cursor: "pointer",
 });
 
 const EmptyState = styled.div({
