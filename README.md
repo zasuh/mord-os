@@ -91,3 +91,5 @@ These improvements are mostly on how the code was written and where I had issues
 - *Private routing*: Since the apps were being opened in modals I didn't really see a need for private routing. If the app icons would be treated as items in a sidebar navigation and each one would take the whole screen then I would be implementing each app as it's own route.
 
 - *Mobile responsiveness*: The app sadly only supports medium sized or large screens. Maybe the mobile view would then move the toolbar to the upper part of the screen and have apps placed in a grid. This would also include some updates to how the current code is written.
+
+Those are the ideas and improvements I could think of. Over time I would probably think of more alongside discussing it with someone else. I don't really believe any single feature would be too big to implement given time and some help.
