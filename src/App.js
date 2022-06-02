@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
 import Home from "./components/Screens/Home";
 import Login from "./components/Screens/Login";
@@ -27,6 +27,7 @@ const App = () => {
       <Routes>
         <Route path="/login" element={<Login login={login} />} />
         <Route path="/" element={<Home />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </>
   );
